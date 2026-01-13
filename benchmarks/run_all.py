@@ -5,7 +5,7 @@ Usage:
     uv run python benchmarks/run_all.py
     uv run python benchmarks/run_all.py --sizes 100,500,1000
     uv run python benchmarks/run_all.py --strategies 0,3
-    uv run python benchmarks/run_all.py --skip-slow
+    uv run python benchmarks/run_all.py --timeout 600
 """
 
 from __future__ import annotations
@@ -197,7 +197,6 @@ def format_duration(seconds: float) -> str:
 def run_benchmarks(
     sizes: list[int],
     strategy_indices: list[int] | None = None,
-    skip_slow: bool = False,
     timeout: int = 300,
     warmup: bool = True,
 ) -> list[BenchmarkResult]:
@@ -206,7 +205,6 @@ def run_benchmarks(
     Args:
         sizes: List of node counts to test
         strategy_indices: Which strategies to run (0-3), or None for all
-        skip_slow: Skip strategy 0 for sizes > 1000
         timeout: Timeout per benchmark in seconds
         warmup: Run a warmup iteration first
 
@@ -229,25 +227,6 @@ def run_benchmarks(
     for size in sizes:
         for strategy in strategies:
             current_run += 1
-
-            # Skip slow strategies for large sizes if requested
-            if skip_slow and isinstance(strategy, IndividualMergeStrategy) and size > 1000:
-                console.print(
-                    f"[{current_run}/{total_runs}] Skipping {strategy.name} "
-                    f"for {size} nodes (--skip-slow)"
-                )
-                results.append(
-                    BenchmarkResult(
-                        strategy_name=strategy.name,
-                        node_count=size,
-                        edge_count=size - 1,
-                        duration_seconds=0,
-                        nodes_per_second=0,
-                        success=False,
-                        error="Skipped (--skip-slow)",
-                    )
-                )
-                continue
 
             console.print(
                 f"[{current_run}/{total_runs}] Running {strategy.name} "
@@ -403,11 +382,6 @@ def main():
         help="Timeout per benchmark in seconds (default: 300)",
     )
     parser.add_argument(
-        "--skip-slow",
-        action="store_true",
-        help="Skip strategy 0 for sizes > 1000",
-    )
-    parser.add_argument(
         "--no-warmup",
         action="store_true",
         help="Skip warmup run",
@@ -452,7 +426,6 @@ def main():
     results = run_benchmarks(
         sizes=sizes,
         strategy_indices=strategy_indices,
-        skip_slow=args.skip_slow,
         timeout=args.timeout,
         warmup=not args.no_warmup,
     )

@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-01-13T14:28:20.808667",
+  "results": [
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 1,
+      "edge_count": 0,
+      "duration_seconds": 0.0044909209973411635,
+      "nodes_per_second": 222.67147442407628,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 10,
+      "edge_count": 9,
+      "duration_seconds": 0.015586994006298482,
+      "nodes_per_second": 641.5605212883987,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 100,
+      "edge_count": 99,
+      "duration_seconds": 0.020777458004886284,
+      "nodes_per_second": 4812.908295927383,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 100000,
+      "edge_count": 99999,
+      "duration_seconds": 3.2952236810087925,
+      "nodes_per_second": 30346.953554723856,
+      "success": true,
+      "error": null
+    }
+  ]
+}

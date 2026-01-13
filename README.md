@@ -26,7 +26,7 @@ sleep 5
 uv sync
 
 # Run benchmarks
-uv run python -m benchmarks.run_all --sizes 100,500,1000 --skip-slow
+uv run python -m benchmarks.run_all --sizes 100,500,1000
 
 # Visualize results
 uv run python -m benchmarks.visualize benchmarks/results/benchmark_*.json
@@ -231,9 +231,6 @@ uv run python -m benchmarks.run_all --sizes 100,500,1000,5000
 # Run specific strategies only (0-3)
 uv run python -m benchmarks.run_all --strategies 0,3
 
-# Skip slow strategies for large sizes
-uv run python -m benchmarks.run_all --skip-slow
-
 # Custom timeout
 uv run python -m benchmarks.run_all --timeout 600
 
@@ -242,7 +239,6 @@ uv run python -m benchmarks.run_all \
     --sizes 100,1000,10000 \
     --strategies 1,2,3 \
     --timeout 300 \
-    --skip-slow \
     --no-warmup
 
 # Visualize benchmark results
