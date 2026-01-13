@@ -70,14 +70,21 @@ The COPY step is fast, but we're still running Cypher for each batch. This ended
 
 ### Strategy 3: Direct SQL
 
-AGE stores graph data in regular PostgreSQL tables. Each label has its own table (`"graph"."Person"`, `"graph"."KNOWS"`, etc.) with a predictable schema. By writing to these tables directly, we can skip Cypher entirely:
+AGE stores graph data in regular PostgreSQL tables—each label gets its own table (e.g., `"graph"."Person"`) that inherits from `_ag_label_vertex`. You can query these tables directly:
+
+```sql
+SELECT * FROM ag_catalog.ag_label;  -- label metadata (id, sequence name)
+SELECT * FROM "my_graph"."Person";  -- actual node data
+```
+
+Node tables have two columns: `id` (a graphid) and `properties` (agtype). Since we know the schema, we can skip Cypher and INSERT directly:
 
 ```python
 cursor.copy_from(buffer, "staging", columns=["id", "properties"])
 cursor.execute("""
     INSERT INTO "graph"."Person" (id, properties)
     SELECT 
-        ag_catalog._graphid(label_id, nextval(seq)),
+        ag_catalog._graphid(label_id, nextval(seq)),  -- compute graphid
         properties::agtype
     FROM staging
     WHERE NOT EXISTS (...)
@@ -126,28 +133,6 @@ This implementation includes safeguards for common issues:
 - Properly escapes COPY data
 
 Direct SQL makes sense for bulk loading when you control the AGE version. For interactive operations or when cross-version compatibility matters, stick with Cypher.
-
----
-
-## AGE Internals Reference
-
-```sql
--- Graph and label metadata
-SELECT * FROM ag_catalog.ag_graph;
-SELECT * FROM ag_catalog.ag_label WHERE graph = (
-    SELECT graphid FROM ag_catalog.ag_graph WHERE name = 'my_graph'
-);
-
--- Node tables inherit from _ag_label_vertex
-SELECT * FROM "my_graph"."Person";
-
--- Edge tables inherit from _ag_label_edge (with start_id, end_id columns)
-SELECT * FROM "my_graph"."KNOWS";
-```
-
-Key functions:
-- `ag_catalog._graphid(label_id, seq_value)` — compute a graphid
-- `ag_catalog.agtype_object_field_text_agtype(props, '"id"')` — extract a property value
 
 ---
 
