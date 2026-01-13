@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: apache/age:release_PG17_1.6.0
+    env_file:
+      - env/postgres.env
+    ports:
+      - "5433:5432"  # Use 5433 to avoid conflicts with other PostgreSQL instances
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U benchmark"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
