@@ -12,6 +12,8 @@ This benchmark repo aims to mirror our setup in Kartograph as closely as possibl
 Database queries are made via Python script to a Postgres docker container. Notably,
 this prevents us from using file-based bulk loading strategies (like from CSV).
 
+Each benchmark run inserts N nodes plus N-1 edges (forming a chain). So "10k nodes" actually means inserting ~20k entities.
+
 ### Strategy 0: Individual MERGE
 
 We started here with the naive approach, executing a cypher query
