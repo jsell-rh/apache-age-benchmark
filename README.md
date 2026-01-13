@@ -1,25 +1,8 @@
-# Apache AGE Bulk Insert Benchmarks
+# Optimizing Bulk Insert with Apache AGE
 
-We needed to load ~11,000 nodes into [Apache AGE](https://age.apache.org/) (a PostgreSQL graph extension). Individual Cypher MERGE queries took over 2 hours. By writing directly to AGE's underlying PostgreSQL tables, we reduced this to 27 seconds.
+While building our experimental knowledge graph platform, [Kartograph](https://github.com/openshift-hyperfleet/kartograph), we ran into significant performance issues when inserting >10K nodes into [Apache AGE](https://age.apache.org/) (a PostgreSQL graph extension).
 
-This repo contains benchmarks for four different approaches, so you can see the tradeoffs yourself.
-
-## Results Summary
-
-| Approach | 10k nodes | Notes |
-|----------|-----------|-------|
-| Individual MERGE | 57s | N roundtrips, N query parses |
-| UNWIND batch | 2m 19s | Single query, but parser struggles with large inputs |
-| COPY + UNWIND | 6m 34s | Fast staging, but still Cypher-bound |
-| Direct SQL | 0.4s | Bypasses Cypher, writes to AGE tables directly |
-
-## Quick Start
-
-```bash
-docker compose up -d
-uv sync
-uv run python -m benchmarks.run_all --sizes 100,1000,5000
-```
+This repo documents our journey optimizing bulk loading, moving through four strategies from simple to complex. We also provide a benchmark script so you can reproduce the results on your own hardware.
 
 ---
 
@@ -95,7 +78,17 @@ This runs at ~35,000 nodes/second—roughly 100x faster than the Cypher-based ap
 
 ---
 
-## Full Benchmark Results
+## Results
+
+| Approach | 10k nodes | Notes |
+|----------|-----------|-------|
+| Individual MERGE | 57s | N roundtrips, N query parses |
+| UNWIND batch | 2m 19s | Single query, but parser struggles with large inputs |
+| COPY + UNWIND | 6m 34s | Fast staging, but still Cypher-bound |
+| Direct SQL | 0.4s | Bypasses Cypher, writes to AGE tables directly |
+
+<details>
+<summary>Full benchmark table</summary>
 
 ```
 ┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┓
@@ -107,6 +100,10 @@ This runs at ~35,000 nodes/second—roughly 100x faster than the Cypher-based ap
 │ 3. Direct SQL       │      14ms │      24ms │       32ms │      138ms │       401ms │       1.11s │
 └─────────────────────┴───────────┴───────────┴────────────┴────────────┴─────────────┴─────────────┘
 ```
+
+</details>
+
+---
 
 ## When to Use What
 
@@ -133,6 +130,16 @@ This implementation includes safeguards for common issues:
 - Properly escapes COPY data
 
 Direct SQL makes sense for bulk loading when you control the AGE version. For interactive operations or when cross-version compatibility matters, stick with Cypher.
+
+---
+
+## Try It Yourself
+
+```bash
+docker compose up -d
+uv sync
+uv run python -m benchmarks.run_all --sizes 100,1000,5000
+```
 
 ---
 
