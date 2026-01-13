@@ -118,7 +118,12 @@ At 10k nodes, this strategy takes ~433 milliseconds to execute (~230x faster tha
 > significant "gotchas".
 >
 > Inserting data this way relies on a private interface that is not guaranteed to be stable
-> by the Apache AGE project. Updates to Apache AGE may break this approach. 
+> by the Apache AGE project. Updates to Apache AGE may break this approach.
+>
+> Node and edge tables are lazily created by Apache AGE when cypher queries are used. This is
+> not true for direct inserts. To reduce the fragility of this approach, we chose to create a
+> single edge/node of a given label using cypher before doing the direct insert. This allowed
+> Apache AGE to perform the label table bootstrapping for us.
 > 
 > Further, one must take special care to ensure that IDs are properly generated via the 
 > Postgres sequence, and that the sequence is properly incremented after use.
@@ -157,6 +162,8 @@ At 10k nodes, this strategy takes ~433 milliseconds to execute (~230x faster tha
 
 </details>
 
+_Benchmarks run on: Intel Core Ultra 9 185H (16 cores), 64GB RAM, Fedora 42, PostgreSQL in Docker_
+
 ---
 
 ## When to Use What
@@ -167,23 +174,6 @@ At 10k nodes, this strategy takes ~433 milliseconds to execute (~230x faster tha
 | Moderate batches (10-100 entities) | UNWIND reduces roundtrips without parser issues |
 | Bulk loading (1000+ entities) | Direct SQL is the only approach that scales well |
 
----
-
-## Tradeoffs of Direct SQL
-
-Writing directly to AGE's tables bypasses its abstraction layer:
-
-- **Version coupling**: The internal table structure could change between AGE versions
-- **Manual ID management**: You need to compute graphids using `_graphid(label_id, sequence_value)`
-- **Label bootstrapping**: Label tables are created lazily—you need to create the first entity via Cypher
-
-This implementation includes safeguards for common issues:
-- Validates label names to prevent SQL injection
-- Detects duplicate IDs in batches
-- Fails on orphaned edges rather than silently dropping them
-- Properly escapes COPY data
-
-Direct SQL makes sense for bulk loading when you control the AGE version. For interactive operations or when cross-version compatibility matters, stick with Cypher.
 
 ---
 
@@ -193,6 +183,9 @@ Direct SQL makes sense for bulk loading when you control the AGE version. For in
 docker compose up -d
 uv sync
 uv run python -m benchmarks.run_all --sizes 100,1000,5000
+
+# Generate Graphs
+uv run python -m benchmarks.visualize benchmarks/results/benchmark_*.json
 ```
 
 ---

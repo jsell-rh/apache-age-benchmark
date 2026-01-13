@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-01-13T15:06:40.841111",
+  "results": [
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 1,
+      "edge_count": 0,
+      "duration_seconds": 0.003311384003609419,
+      "nodes_per_second": 301.9885337701689,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 1,
+      "edge_count": 0,
+      "duration_seconds": 0.0041125830030068755,
+      "nodes_per_second": 243.15618657881424,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 1,
+      "edge_count": 0,
+      "duration_seconds": 0.007438500004354864,
+      "nodes_per_second": 134.43570604484114,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 1,
+      "edge_count": 0,
+      "duration_seconds": 0.005609750995063223,
+      "nodes_per_second": 178.26103170711767,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 10,
+      "edge_count": 9,
+      "duration_seconds": 0.01602694900066126,
+      "nodes_per_second": 623.949074748251,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 10,
+      "edge_count": 9,
+      "duration_seconds": 0.009975199995096773,
+      "nodes_per_second": 1002.4861661836773,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 10,
+      "edge_count": 9,
+      "duration_seconds": 0.014603458999772556,
+      "nodes_per_second": 684.7692728247291,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 10,
+      "edge_count": 9,
+      "duration_seconds": 0.01612611100426875,
+      "nodes_per_second": 620.1123133378467,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 100,
+      "edge_count": 99,
+      "duration_seconds": 0.09441261801111978,
+      "nodes_per_second": 1059.1804581483182,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 100,
+      "edge_count": 99,
+      "duration_seconds": 0.04747326199139934,
+      "nodes_per_second": 2106.4488894425845,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 100,
+      "edge_count": 99,
+      "duration_seconds": 0.056665184994926676,
+      "nodes_per_second": 1764.75202558596,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 100,
+      "edge_count": 99,
+      "duration_seconds": 0.019989552005426958,
+      "nodes_per_second": 5002.613363863834,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 92.28810856599011,
+      "nodes_per_second": 108.3563219073837,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 194.24527583099552,
+      "nodes_per_second": 51.481303507739206,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 635.622951258003,
+      "nodes_per_second": 15.732597415194567,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 0.3520195940072881,
+      "nodes_per_second": 28407.509610936497,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 98.95563138500438,
+      "nodes_per_second": 101.05539078512098,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 199.4044208060077,
+      "nodes_per_second": 50.14933951604105,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 629.1892304979992,
+      "nodes_per_second": 15.893469746907563,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 10000,
+      "edge_count": 9999,
+      "duration_seconds": 0.4325898419920122,
+      "nodes_per_second": 23116.585340865793,
+      "success": true,
+      "error": null
+    }
+  ]
+}

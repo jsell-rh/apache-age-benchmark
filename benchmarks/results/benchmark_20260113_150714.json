@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-01-13T15:07:14.350907",
+  "results": [
+    {
+      "strategy": "0. Individual MERGE",
+      "node_count": 1000,
+      "edge_count": 999,
+      "duration_seconds": 1.759938150004018,
+      "nodes_per_second": 568.2017859535104,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "1. UNWIND MERGE",
+      "node_count": 1000,
+      "edge_count": 999,
+      "duration_seconds": 2.13826357400103,
+      "nodes_per_second": 467.6691929652253,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "2. COPY + UNWIND",
+      "node_count": 1000,
+      "edge_count": 999,
+      "duration_seconds": 5.678145960002439,
+      "nodes_per_second": 176.11382430887184,
+      "success": true,
+      "error": null
+    },
+    {
+      "strategy": "3. Direct SQL",
+      "node_count": 1000,
+      "edge_count": 999,
+      "duration_seconds": 0.05119937300332822,
+      "nodes_per_second": 19531.489183177982,
+      "success": true,
+      "error": null
+    }
+  ]
+}
