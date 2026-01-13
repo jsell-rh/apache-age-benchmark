@@ -148,6 +148,8 @@ At 10k nodes, this strategy takes ~433 milliseconds to execute (~230x faster tha
 | COPY + UNWIND | 10m 29s | Fast staging, but still Cypher-bound |
 | Direct SQL | 433ms | Bypasses Cypher, writes to AGE tables directly |
 
+![Throughput comparison](benchmarks/charts/throughput_comparison.png)
+
 <details>
 <summary>Full benchmark table</summary>
 
@@ -161,6 +163,24 @@ At 10k nodes, this strategy takes ~433 milliseconds to execute (~230x faster tha
 │ 3. Direct SQL       │   5.6ms │     16ms │      20ms │       51ms │       433ms │
 └─────────────────────┴─────────┴──────────┴───────────┴────────────┴─────────────┘
 ```
+
+</details>
+
+<details>
+<summary>More charts</summary>
+
+> [!Note]
+>
+> For the 100k and 300k runs, we did not run the other strategies due to 
+> extremely long execution times. We felt that the numbers up to 10k were 
+> sufficient to tell the story. 
+>
+> If you run with a more capable machine or with more patience, we'd love 
+> to see more data about how these strategies scale!
+
+![Duration comparison](benchmarks/charts/duration_comparison.png)
+
+![Speedup comparison](benchmarks/charts/speedup_comparison.png)
 
 </details>
 
