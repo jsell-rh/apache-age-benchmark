@@ -4,6 +4,8 @@ While building our experimental knowledge graph platform, [Kartograph](https://g
 
 This repo documents our journey optimizing bulk loading, moving through four strategies from simple to complex. We also provide a benchmark script so you can reproduce the results on your own hardware.
 
+_Disclaimer: Generative AI was used in the creation of the benchmark code._
+
 ---
 
 ## The Approaches
